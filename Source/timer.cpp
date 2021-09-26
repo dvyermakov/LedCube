@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <stdbool.h>
-#include "timers.h"
+#include "timer.h"
 #include "stm32f10x.h"
 
 unsigned int Timers[MAX_TIMERS];
