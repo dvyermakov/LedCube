@@ -45,4 +45,5 @@
 *.Admin
 *.uvoptx
 *.uvprojx
-RTE/*
+RTE/*.*
+Objects/*.*

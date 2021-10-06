@@ -5,7 +5,7 @@
 
 unsigned int Timers[MAX_TIMERS];
 
-void SysTick_Handler(){
+extern "C" void SysTick_Handler(void){
 	char i;	
 	for (i = 0; i < MAX_TIMERS; i++){
 		Timers[i]++;
@@ -13,6 +13,7 @@ void SysTick_Handler(){
 }
 
 void InitTimers(void){
+	NVIC_EnableIRQ(SysTick_IRQn);
 	char i;
 	for (i = 0; i < MAX_TIMERS; i++){
 		Timers[i] = 0;
