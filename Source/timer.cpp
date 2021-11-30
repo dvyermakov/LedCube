@@ -18,7 +18,7 @@ void InitTimers(void){
 	for (i = 0; i < MAX_TIMERS; i++){
 		Timers[i] = 0;
 	}
-	SysTick_Config(SystemCoreClock/10);
+	SysTick_Config(SystemCoreClock/1000);
 }
 
 unsigned int GetTimer(char Timer){

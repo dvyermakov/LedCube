@@ -5,7 +5,6 @@
 
 Row::Row(char number){
    rowNumber = number;
-   
 }
 
 void Row::writeRow(char row){

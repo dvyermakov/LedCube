@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "cube.h"
+#include "frame.h"
 #include "stm32f10x.h"
 
 Cube::Cube(){
@@ -101,6 +102,188 @@ void Cube::initCube(){
 	GPIOB->CRL |= GPIO_CRL_MODE5; //MODE = 11 - Output mode, max speed 50 MHz
 }
 
+void Cube::setLedState(char ledNumber, bool ledState){
+   switch (ledNumber){
+      case 0:{
+         if (ledState){
+				GPIOB->BSRR = GPIO_BSRR_BS12;
+			}
+			else{
+				GPIOB->BSRR = GPIO_BSRR_BR12;
+			}
+         break;
+      }
+      case 1:{
+         if (ledState){
+				GPIOB->BSRR = GPIO_BSRR_BS13;
+			}
+			else{
+				GPIOB->BSRR = GPIO_BSRR_BR13;
+			}
+         break;
+      }
+      case 2:{
+         if (ledState){
+				GPIOB->BSRR = GPIO_BSRR_BS14;
+			}
+			else{
+				GPIOB->BSRR = GPIO_BSRR_BR14;
+			}
+         break;
+      }
+      case 3:{
+         if (ledState){
+				GPIOB->BSRR = GPIO_BSRR_BS15;
+			}
+			else{
+				GPIOB->BSRR = GPIO_BSRR_BR15;
+			}
+         break;
+      }
+      case 4:{
+         if (ledState){
+				GPIOC->BSRR = GPIO_BSRR_BS6;
+			}
+			else{
+				GPIOC->BSRR = GPIO_BSRR_BR6;
+			}
+         break;
+      }
+      case 5:{
+         if (ledState){
+				GPIOC->BSRR = GPIO_BSRR_BS7;
+			}
+			else{
+				GPIOC->BSRR = GPIO_BSRR_BR7;
+			}
+         break;
+      }
+      case 6:{
+         if (ledState){
+				GPIOC->BSRR = GPIO_BSRR_BS8;
+			}
+			else{
+				GPIOC->BSRR = GPIO_BSRR_BR8;
+			}
+         break;
+      }
+      case 7:{
+         if (ledState){
+				GPIOC->BSRR = GPIO_BSRR_BS9;
+			}
+			else{
+				GPIOC->BSRR = GPIO_BSRR_BR9;
+			}
+         break;
+      }
+   }
+}
+
+void Cube::setByte(char byte){
+   for (int i = 0; i < 8; ++i){
+      if (byte & (1 << i)){
+         setLedState(i, true);
+      }
+      else{
+         setLedState(i, false);
+      }
+   }
+}
+
+void Cube::selectRow(char rowNumber){
+   switch (rowNumber){
+		case 0:{
+			GPIOB->BSRR = GPIO_BSRR_BS6;
+			break;
+		}
+		case 1:{
+			GPIOB->BSRR = GPIO_BSRR_BS7;
+			break;
+		}
+		case 2:{
+			GPIOB->BSRR = GPIO_BSRR_BS8;
+			break;
+		}
+		case 3:{
+			GPIOB->BSRR = GPIO_BSRR_BS9;
+			break;
+		}
+		case 4:{
+			GPIOC->BSRR = GPIO_BSRR_BS13;
+			break;
+		}
+		case 5:{
+			GPIOC->BSRR = GPIO_BSRR_BS14;
+			break;
+		}
+		case 6:{
+			GPIOC->BSRR = GPIO_BSRR_BS15;
+			break;
+		}
+		case 7:{
+			GPIOC->BSRR = GPIO_BSRR_BS0;
+			break;
+		}
+	}
+	GPIOB->BSRR = GPIO_BSRR_BR6;
+	GPIOB->BSRR = GPIO_BSRR_BR7;
+	GPIOB->BSRR = GPIO_BSRR_BR8;
+	GPIOB->BSRR = GPIO_BSRR_BR9;
+	GPIOC->BSRR = GPIO_BSRR_BR13;
+	GPIOC->BSRR = GPIO_BSRR_BR14;
+	GPIOC->BSRR = GPIO_BSRR_BR15;
+	GPIOC->BSRR = GPIO_BSRR_BR0;
+}
+
+void Cube::onFloor(char floorNumber){
+   GPIOA->BSRR = GPIO_BSRR_BR15;
+	GPIOC->BSRR = GPIO_BSRR_BR10;
+	GPIOC->BSRR = GPIO_BSRR_BR11;
+	GPIOC->BSRR = GPIO_BSRR_BR12;
+	GPIOD->BSRR = GPIO_BSRR_BR2;
+	GPIOB->BSRR = GPIO_BSRR_BR3;
+	GPIOB->BSRR = GPIO_BSRR_BR4;
+	GPIOB->BSRR = GPIO_BSRR_BR5;
+	switch (floorNumber){
+		case 0:{
+			GPIOA->BSRR = GPIO_BSRR_BS15;
+			break;
+		}
+		case 1:{
+			GPIOC->BSRR = GPIO_BSRR_BS10;
+			break;
+		}
+		case 2:{
+			GPIOC->BSRR = GPIO_BSRR_BS11;
+			break;
+		}
+		case 3:{
+			GPIOC->BSRR = GPIO_BSRR_BS12;
+			break;
+		}
+		case 4:{
+			GPIOD->BSRR = GPIO_BSRR_BS2;
+			break;
+		}
+		case 5:{
+			GPIOB->BSRR = GPIO_BSRR_BS3;
+			break;
+		}
+		case 6:{
+			GPIOB->BSRR = GPIO_BSRR_BS4;
+			break;
+		}
+		case 7:{
+			GPIOB->BSRR = GPIO_BSRR_BS5;
+			break;
+		}
+	}
+}
+
+void Cube::setFloor(char floorNumber, char *floor){
+   
+}
+
 void Cube::setOEState(bool state){
    if (state){
 		GPIOA->BSRR = GPIO_BSRR_BR8;
@@ -108,55 +291,4 @@ void Cube::setOEState(bool state){
 	else{
 		GPIOA->BSRR = GPIO_BSRR_BS8;
 	}
-}
-
-void Cube::setByte(char byte){
-   if (byte & (1 << 0)){
-      leds[0].setLedState(true);
-   }
-   else{
-      leds[0].setLedState(false);
-   }
-   if (byte & (1 << 1)){
-      leds[0].setLedState(true);
-   }
-   else{
-      leds[1].setLedState(false);
-   }
-   if (byte & (1 << 2)){
-      leds[2].setLedState(true);
-   }
-   else{
-      leds[2].setLedState(false);
-   }
-   if (byte & (1 << 3)){
-      leds[3].setLedState(true);
-   }
-   else{
-      leds[3].setLedState(false);
-   }
-   if (byte & (1 << 4)){
-      leds[4].setLedState(true);
-   }
-   else{
-      leds[4].setLedState(false);
-   }
-   if (byte & (1 << 5)){
-      leds[5].setLedState(true);
-   }
-   else{
-      leds[5].setLedState(false);
-   }
-   if (byte & (1 << 6)){
-      leds[6].setLedState(true);
-   }
-   else{
-      leds[6].setLedState(false);
-   }
-   if (byte & (1 << 7)){
-      leds[7].setLedState(true);
-   }
-   else{
-      leds[7].setLedState(false);
-   }
 }

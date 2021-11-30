@@ -1,21 +1,21 @@
 #ifndef CUBE_h
 #define CUBE_h
 
-#include "led.h"
 #include "row.h"
 #include "floor.h"
 
 class Cube{
    private: 
       void initCube();
-      Led leds[8] = {0, 1, 2, 3, 4, 5, 6, 7};
-      Row rows[8] = {0, 1, 2, 3, 4, 5, 6, 7};
-      Floor floors[8] = {0, 1, 2, 3, 4, 5, 6, 7};
-      void setByte(char byte);
+      void setLedState(char ledNumber, bool state); // управление состоянием светодиода (false - выключен, true - включен)
+      void setByte(char byte); // установка байта на строку 
+      void selectRow(char rowNumber); //сигнал l->U->l на ногу CP
+      void onFloor(char floorNumber); // зажигаем этаж
+      
       
    public: 
       Cube();
-   
+      void setFloor(char floorNumber, char *floor); //установка этажа из вне
       void setOEState(bool state);
 };
 
